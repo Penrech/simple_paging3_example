@@ -24,15 +24,17 @@ class SearchView(context: Context, attrs: AttributeSet): FrameLayout(context, at
         with(binding) {
             this@SearchView.addView(root)
 
-            searchButton.setOnClickListener {
+            searchButton.setOnClickListener { view ->
                 if (::onSearchAction.isInitialized) {
-                    onSearchAction(binding.searchEt.toString())
-                    closeKeyboard(it)
+                    searchEt.text?.let { text ->
+                        onSearchAction(text.toString())
+                    }
+                    closeKeyboard(view)
                 }
             }
 
             searchTextInput.setEndIconOnClickListener {
-                searchEt.text = null
+                searchEt.text?.clear()
                 searchTextInput.setEndIconActivated(false)
                 closeKeyboard(it)
             }

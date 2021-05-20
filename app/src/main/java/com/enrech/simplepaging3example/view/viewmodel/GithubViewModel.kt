@@ -5,11 +5,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.enrech.simplepaging3example.data.repository.GithubRepository
+import com.enrech.simplepaging3example.data.service.ApiService
+import com.enrech.simplepaging3example.data.service.GithubApi
 import com.enrech.simplepaging3example.model.Repo
 import kotlinx.coroutines.flow.Flow
 
 class GithubViewModel(
-    private val repository: GithubRepository
+    private val repository: GithubRepository = GithubRepository(ApiService.instantiate())
 ) : ViewModel() {
 
     private var currentUsernameValue: String? = null
