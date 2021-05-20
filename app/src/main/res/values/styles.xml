@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="OutlinedRoundedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.example.TextInputLayout.Rounded</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.example.Button.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.example.TextInputLayout.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="OutlinedTextView" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense">
+        <item name="strokeWidth">2dp</item>
+    </style>
+</resources>
