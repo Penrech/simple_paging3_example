@@ -2,13 +2,13 @@ package com.enrech.simplepaging3example.data.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.enrech.simplepaging3example.data.service.GitHubApiService
+import com.enrech.simplepaging3example.data.service.GithubApi
 import com.enrech.simplepaging3example.model.Repo
 
 private const val INITIAL_PAGE = 1
 
 class GithubRepoPagingSource(
-    private val api: GitHubApiService,
+    private val api: GithubApi,
     private val username: String
 ) : PagingSource<Int, Repo>() {
 
