@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">SimplePaging3Example</string>
+    <string name="app_name">Github repos</string>
+    <string name="retry_button">Retry</string>
 </resources>

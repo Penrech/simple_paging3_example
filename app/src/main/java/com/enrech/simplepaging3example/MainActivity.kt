@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.enrech.simplepaging3example.databinding.ActivityMainBinding
 import com.enrech.simplepaging3example.model.Repo
 import com.enrech.simplepaging3example.view.adapter.ReposAdapter
+import com.enrech.simplepaging3example.view.adapter.ReposLoadStateAdapter
 import com.enrech.simplepaging3example.view.viewmodel.GithubViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -30,7 +31,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpViews() = with(binding) {
-        mainRecyclerview.adapter = adapter
+        mainRecyclerview.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = ReposLoadStateAdapter { adapter.retry() },
+            footer = ReposLoadStateAdapter { adapter.retry() }
+        )
     }
 
     private fun initOnClickListeners() = with(binding) {
