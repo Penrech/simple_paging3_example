@@ -2,8 +2,10 @@ package com.enrech.simplepaging3example
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enrech.simplepaging3example.databinding.ActivityMainBinding
 import com.enrech.simplepaging3example.model.Repo
@@ -31,10 +33,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpViews() = with(binding) {
-        mainRecyclerview.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = ReposLoadStateAdapter { adapter.retry() },
-            footer = ReposLoadStateAdapter { adapter.retry() }
-        )
+        mainRecyclerview.adapter = adapter.apply {
+            withLoadStateHeaderAndFooter(
+                header = ReposLoadStateAdapter { adapter.retry() },
+                footer = ReposLoadStateAdapter { adapter.retry() }
+            )
+            addLoadStateListener { loadState ->
+                val isEmptyList = loadState.refresh is LoadState.NotLoading && itemCount == 0
+                showEmptyList(isEmptyList)
+            }
+        }
     }
 
     private fun initOnClickListeners() = with(binding) {
@@ -48,5 +56,9 @@ class MainActivity : AppCompatActivity() {
         searchJob = lifecycleScope.launch {
             viewModel.searchRepos(username).collect { adapter.submitData(it) }
         }
+    }
+
+    private fun showEmptyList(show: Boolean) = with(binding) {
+        emptyViewContainer.emptyView.visibility = if (show) View.VISIBLE else View.GONE
     }
 }
