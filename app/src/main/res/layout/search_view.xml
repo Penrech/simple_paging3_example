@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="0dp"
+    app:cardCornerRadius="12dp"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="4dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -20,6 +23,7 @@
             android:layout_height="wrap_content"
             app:boxStrokeColor="@color/purple_500"
             app:endIconMode="clear_text"
+            app:placeholderText="Search for a github repo..."
             app:layout_constraintEnd_toStartOf="@id/search_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -45,7 +49,7 @@
             app:icon="@drawable/ic_baseline_search_24"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintBottom_toBottomOf="@id/search_text_input"
             app:layout_constraintDimensionRatio="h,1:1"
             app:layout_constraintEnd_toEndOf="parent"

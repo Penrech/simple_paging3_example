@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
+import androidx.cardview.widget.CardView
 import com.enrech.simplepaging3example.databinding.SearchViewBinding
 
 class SearchView(context: Context, attrs: AttributeSet): FrameLayout(context, attrs) {
@@ -23,7 +24,7 @@ class SearchView(context: Context, attrs: AttributeSet): FrameLayout(context, at
     init {
         with(binding) {
             this@SearchView.addView(root)
-
+            
             searchButton.setOnClickListener { view ->
                 if (::onSearchAction.isInitialized) {
                     searchEt.text?.let { text ->
