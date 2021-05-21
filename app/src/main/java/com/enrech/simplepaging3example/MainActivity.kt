@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,16 +34,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpViews() = with(binding) {
-        mainRecyclerview.adapter = adapter.apply {
-            withLoadStateHeaderAndFooter(
-                header = ReposLoadStateAdapter { adapter.retry() },
-                footer = ReposLoadStateAdapter { adapter.retry() }
-            )
-            addLoadStateListener { loadState ->
-                val isEmptyList = loadState.refresh is LoadState.NotLoading && itemCount == 0
-                showEmptyList(isEmptyList)
-            }
-        }
+        mainRecyclerview.adapter = adapter.withLoadStateFooter(ReposLoadStateAdapter(adapter::retry))
+//                adapter.apply {
+//            withLoadStateFooter(ReposLoadStateAdapter(adapter::retry))
+//            addLoadStateListener { loadState ->
+//                val isEmptyList = loadState.refresh is LoadState.NotLoading && itemCount == 0
+//                showEmptyList(isEmptyList)
+//
+//                mainRecyclerview.isVisible = loadState.source.refresh is LoadState.NotLoading
+//                progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+//                errorViewContainer.errorView.isVisible = loadState.source.refresh is LoadState.Error
+//            }
+//        }
+        errorViewContainer.errorRetryButton.setOnClickListener { adapter.retry() }
     }
 
     private fun initOnClickListeners() = with(binding) {
@@ -59,6 +63,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showEmptyList(show: Boolean) = with(binding) {
-        emptyViewContainer.emptyView.visibility = if (show) View.VISIBLE else View.GONE
+        emptyViewContainer.emptyView.isVisible = show
     }
 }
