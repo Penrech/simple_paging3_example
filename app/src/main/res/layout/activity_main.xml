@@ -65,6 +65,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintGuide_end="86dp" />
+        app:layout_constraintGuide_end="82dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

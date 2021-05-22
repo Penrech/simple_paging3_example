@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import com.enrech.simplepaging3example.databinding.SearchViewBinding
+import com.google.android.material.snackbar.Snackbar
 
 class SearchView(context: Context, attrs: AttributeSet): FrameLayout(context, attrs) {
 
@@ -48,7 +49,14 @@ class SearchView(context: Context, attrs: AttributeSet): FrameLayout(context, at
 
     private fun searchByText(text: String?) {
         if (text.isNullOrBlank()) {
-            binding.searchTextInput.isErrorEnabled = true
+            Snackbar
+                .make(binding.searchTextInput, "Query shouldn't be empty", Snackbar.LENGTH_LONG)
+                .apply {
+                    animationMode = Snackbar.ANIMATION_MODE_SLIDE
+                    anchorView = binding.searchEt
+                }
+                .show()
+
         } else {
             if (::onSearchAction.isInitialized) {
                 onSearchAction(text)
