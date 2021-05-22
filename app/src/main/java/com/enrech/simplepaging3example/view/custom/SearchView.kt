@@ -51,10 +51,7 @@ class SearchView(context: Context, attrs: AttributeSet): FrameLayout(context, at
         if (text.isNullOrBlank()) {
             Snackbar
                 .make(binding.searchTextInput, "Query shouldn't be empty", Snackbar.LENGTH_LONG)
-                .apply {
-                    animationMode = Snackbar.ANIMATION_MODE_SLIDE
-                    anchorView = binding.searchEt
-                }
+                .apply { anchorView = binding.cardView }
                 .show()
 
         } else {

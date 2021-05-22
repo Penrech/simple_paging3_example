@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Github repos</string>
     <string name="retry_button">Retry</string>
+    <string translatable="false" name="empty_view_default">Empty view text, replace with specific text</string>
     <string name="no_results">It seems that we can\'t fetch the results for that particular query</string>
     <string name="error">There was an error fetching the data, please try again</string>
     <string name="search_hint">Search for a github repo...</string>
+    <string name="initial_info">Search for a github user to list all its repositories</string>
 </resources>

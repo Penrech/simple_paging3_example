@@ -1,17 +1,15 @@
 package com.enrech.simplepaging3example
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.enrech.simplepaging3example.databinding.ActivityMainBinding
-import com.enrech.simplepaging3example.model.Repo
 import com.enrech.simplepaging3example.view.adapter.ReposAdapter
 import com.enrech.simplepaging3example.view.adapter.ReposLoadStateAdapter
+import com.enrech.simplepaging3example.view.custom.empty.EmptyVoEnum
 import com.enrech.simplepaging3example.view.viewmodel.GithubViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -48,11 +46,10 @@ class MainActivity : AppCompatActivity() {
 
                     mainRecyclerview.isVisible = it.source.refresh is LoadState.NotLoading
                     progressBar.isVisible = it.source.refresh is LoadState.Loading
-                    errorViewContainer.errorView.isVisible = it.source.refresh is LoadState.Error
+                    showErrorView(it.source.refresh is LoadState.Error)
                 }
         }
 
-        errorViewContainer.errorRetryButton.setOnClickListener { adapter.retry() }
     }
 
     private fun initOnClickListeners() = with(binding) {
@@ -70,6 +67,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showEmptyList(show: Boolean) = with(binding) {
-        emptyViewContainer.emptyView.isVisible = show && initialSearchPerformed
+        when {
+            show && initialSearchPerformed -> emptyViewContainer.setView(EmptyVoEnum.EMPTY_LIST)
+            show && initialSearchPerformed.not() -> showInitialView()
+        }
+        emptyViewContainer.isVisible = show
+    }
+
+    private fun showErrorView(show: Boolean) = with(binding) {
+        if (show) {
+            emptyViewContainer.setView(
+                EmptyVoEnum.EMPTY_ERROR_VIEW.apply {
+                    callback = { adapter.retry() }
+                }
+            )
+        }
+//        emptyViewContainer.isVisible = show
+    }
+
+    private fun showInitialView() = with(binding) {
+        emptyViewContainer.setView(EmptyVoEnum.EMPTY_INITIAL_LIST)
     }
 }
