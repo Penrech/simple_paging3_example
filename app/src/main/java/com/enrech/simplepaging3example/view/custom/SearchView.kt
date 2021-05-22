@@ -5,9 +5,9 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
-import androidx.cardview.widget.CardView
 import com.enrech.simplepaging3example.databinding.SearchViewBinding
 
 class SearchView(context: Context, attrs: AttributeSet): FrameLayout(context, attrs) {
@@ -26,21 +26,34 @@ class SearchView(context: Context, attrs: AttributeSet): FrameLayout(context, at
             this@SearchView.addView(root)
             
             searchButton.setOnClickListener { view ->
-                if (::onSearchAction.isInitialized) {
-                    searchEt.text?.let { text ->
-                        onSearchAction(text.toString())
-                    }
-                    closeKeyboard(view)
-                }
+                searchByText(searchEt.text?.toString())
+                closeKeyboard(view)
             }
+
 
             searchTextInput.setEndIconOnClickListener {
                 searchEt.text?.clear()
                 searchTextInput.setEndIconActivated(false)
                 closeKeyboard(it)
             }
-        }
 
+            searchEt.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    searchByText(searchEt.text?.toString())
+                }
+                false
+            }
+        }
+    }
+
+    private fun searchByText(text: String?) {
+        if (text.isNullOrBlank()) {
+            binding.searchTextInput.isErrorEnabled = true
+        } else {
+            if (::onSearchAction.isInitialized) {
+                onSearchAction(text)
+            }
+        }
     }
 
     fun addOnSearchListener(callback: (query: String) -> Unit) {

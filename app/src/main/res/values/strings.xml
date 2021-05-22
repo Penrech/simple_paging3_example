@@ -3,4 +3,5 @@
     <string name="retry_button">Retry</string>
     <string name="no_results">It seems that we can\'t fetch the results for that particular query</string>
     <string name="error">There was an error fetching the data, please try again</string>
+    <string name="search_hint">Search for a github repo...</string>
 </resources>
