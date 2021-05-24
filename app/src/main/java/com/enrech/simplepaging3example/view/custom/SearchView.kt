@@ -21,6 +21,7 @@ class SearchView(context: Context, attrs: AttributeSet): FrameLayout(context, at
         )
 
     private lateinit var onSearchAction: (query: String) -> Unit
+    lateinit var clearAction: () -> Unit
 
     init {
         with(binding) {
@@ -36,6 +37,7 @@ class SearchView(context: Context, attrs: AttributeSet): FrameLayout(context, at
                 searchEt.text?.clear()
                 searchTextInput.setEndIconActivated(false)
                 closeKeyboard(it)
+                if (::clearAction.isInitialized) { clearAction() }
             }
 
             searchEt.setOnEditorActionListener { _, actionId, _ ->

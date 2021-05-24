@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 }
         }
 
+        searchView.clearAction = { clearData() }
     }
 
     private fun initOnClickListeners() = with(binding) {
@@ -66,12 +67,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun clearData() {
+        searchJob?.cancel()
+        viewModel.clearList()
+        backToInitialUI()
+    }
+
+    private fun backToInitialUI() = with(binding) {
+        initialSearchPerformed = false
+        mainRecyclerview.isVisible = false
+        progressBar.isVisible = false
+        showEmptyList(true)
+    }
+
     private fun showEmptyList(show: Boolean) = with(binding) {
         when {
             show && initialSearchPerformed -> emptyViewContainer.setView(EmptyVoEnum.EMPTY_LIST)
-            show && initialSearchPerformed.not() -> showInitialView()
+            show && initialSearchPerformed.not() ->  emptyViewContainer.setView(EmptyVoEnum.EMPTY_INITIAL_LIST)
         }
-        emptyViewContainer.isVisible = show
+        emptyViewContainer.setVisible(show, EmptyVoEnum.EMPTY_LIST, EmptyVoEnum.EMPTY_INITIAL_LIST)
     }
 
     private fun showErrorView(show: Boolean) = with(binding) {
@@ -82,10 +96,7 @@ class MainActivity : AppCompatActivity() {
                 }
             )
         }
-//        emptyViewContainer.isVisible = show
+        emptyViewContainer.setVisible(show, EmptyVoEnum.EMPTY_ERROR_VIEW)
     }
 
-    private fun showInitialView() = with(binding) {
-        emptyViewContainer.setView(EmptyVoEnum.EMPTY_INITIAL_LIST)
-    }
 }

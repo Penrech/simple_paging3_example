@@ -6,7 +6,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.enrech.simplepaging3example.data.repository.GithubRepository
 import com.enrech.simplepaging3example.data.service.ApiService
-import com.enrech.simplepaging3example.data.service.GithubApi
 import com.enrech.simplepaging3example.model.Repo
 import kotlinx.coroutines.flow.Flow
 
@@ -17,6 +16,10 @@ class GithubViewModel(
     private var currentUsernameValue: String? = null
 
     private var currentSearchResult: Flow<PagingData<Repo>>? = null
+
+    fun clearList() {
+        repository.clearList()
+    }
 
     fun searchRepos(username: String): Flow<PagingData<Repo>> {
         val lastResult = currentSearchResult
